@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import ClickOutside from "@/components/ClickOutside";
 import { fetchLowestProducts } from "@/utils/api";
+import { useEmployeeStore } from '@/stores/employeeStore';
 
 interface Product {
   id: number;
@@ -13,11 +14,13 @@ const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifying, setNotifying] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
+  const { employee } = useEmployeeStore();
 
   useEffect(() => {
     const loadProducts = async () => {
+      if (!employee || !employee.warehouseId) return;
       try {
-        const data = await fetchLowestProducts(1,2);
+        const data = await fetchLowestProducts(10,employee?.warehouseId);
         setProducts(data);
       } catch (error) {
         console.error('Failed to load products', error);
@@ -25,7 +28,7 @@ const DropdownNotification = () => {
     };
 
     loadProducts();
-  }, []);
+  }, [employee]);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -71,23 +74,26 @@ const DropdownNotification = () => {
               </h5>
             </div>
 
-            <ul className="flex h-auto flex-col overflow-y-auto">
-              {products.map((product) => (
-                <li key={product.id}>
-                  <Link
-                    className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                    href="#"
-                  >
-                    <p className="text-sm text-black">
-                      <span className="text-blue-700 font-bold dark:text-white pl-3">
-                        {product.productName}
-                      </span>{" "}
-                       - Tồn kho: <span className="text-red font-bold">{product.quantity} </span>
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {employee?.position !== "admin" && (
+  <ul className="flex h-auto flex-col overflow-y-auto">
+    {products.map((product) => (
+      <li key={product.id}>
+        <Link
+          className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+          href="#"
+        >
+          <p className="text-sm text-black">
+            <span className="text-blue-700 font-bold dark:text-white pl-3">
+              {product.productName}
+            </span>{" "}
+            - Tồn kho: <span className="text-red font-bold">{product.quantity}</span>
+          </p>
+        </Link>
+      </li>
+    ))}
+  </ul>
+)}
+
           </div>
         )}
       </li>

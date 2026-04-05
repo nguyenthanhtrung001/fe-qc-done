@@ -38,9 +38,11 @@ const OrderInfo: React.FC<OrderInfoProps> = ({
     new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
   const handleCloseModal = () => {
     setShowAddCustomerForm(false);
+    
   };
   const handleAddCustomerSuccess = async (): Promise<void> => {
     console.log("Customer added successfully");
+    window.location.reload();
    
     // Nếu bạn có tác vụ bất đồng bộ nào ở đây, bạn có thể thực hiện chúng
     return Promise.resolve();  // Đảm bảo trả về một Promise

@@ -332,12 +332,12 @@ const TableCancelItem = () => {
                 <div className="mt-3 grid grid-cols-12 py-6">
                   <div className="col-span-7"></div>
                   <div className="col-span-5 flex justify-end px-2 font-bold">
-                    <button
+                    {/* <button
                       onClick={() => handleOpenReceipt(receipt)}
                       className="mr-2 rounded bg-green-600 px-4 py-2 text-white"
                     >
                       Mở phiếu
-                    </button>
+                    </button> */}
                     <button
                       className="rounded bg-red px-4 py-2 text-white"
                       onClick={() => handleCancel(receipt.id)}

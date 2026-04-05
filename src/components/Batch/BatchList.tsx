@@ -52,6 +52,7 @@ export default function BatchList() {
     setNewExpiryDate(batch.expiryDate || ""); // Gán hạn sử dụng hiện tại vào form
     setIsUpdateExpiryModalOpen(true);
   };
+  
 
   // Hàm đóng modal cập nhật hạn sử dụng
   const closeUpdateExpiryDateModal = () => {
@@ -63,12 +64,12 @@ export default function BatchList() {
     if (!selectedBatchForUpdate || !newExpiryDate) {
       return;
     }
-
+    console.log("hsd: ",newExpiryDate)
     try {
+      
       // Gửi yêu cầu cập nhật đến API
       await axios.put(
-        `http://localhost:8888/v1/api/batches/${selectedBatchForUpdate.id}1111`,
-        { expiryDate: newExpiryDate },
+        `http://localhost:8888/v1/api/batches/${selectedBatchForUpdate.id}/expiry-date?expiryDate=${newExpiryDate}`
       );
 
       // Đóng modal trước khi hiển thị Swal
@@ -153,7 +154,8 @@ export default function BatchList() {
               ) {
                 // Cộng 7 ngày vào ngày hiện tại
                 batch.note = "Sắp hết hạn"; // Nếu sắp hết hạn (7 ngày)
-                batch.statusColor = "yellow"; // Màu vàng
+               batch.statusColor = "orange"; // Màu cam
+
               }
             } else {
               batch.statusColor = "gray"; // Màu xám nếu expiryDate là null
@@ -315,8 +317,8 @@ export default function BatchList() {
                         color:
                           batch.statusColor === "red"
                             ? "red"
-                            : batch.statusColor === "yellow"
-                              ? "yellow"
+                            : batch.statusColor === "orange"
+                              ? "orange"
                               : batch.statusColor === "gray"
                                 ? "gray"
                                 : "",

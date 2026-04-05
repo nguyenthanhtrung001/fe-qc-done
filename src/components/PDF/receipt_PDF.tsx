@@ -39,10 +39,7 @@ const calculateTotals = (invoiceDetails: any[]) => {
  * @param {Object} receipt - The receipt data.
  * @param {any[]} details - The list of items in the receipt.
  */
-export const handlePrintPDF = async (
-  receipt: { date: string; supplier: string; id: number; employee: string },
-  details: any[]
-) => {
+export const handlePrintPDF = async (receipt: any, details: any[]) => {
   const { totalQuantity, totalItems, totalPrice } = calculateTotals(details);
 
   // Fetch and convert font file

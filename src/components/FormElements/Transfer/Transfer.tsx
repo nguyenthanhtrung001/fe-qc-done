@@ -29,13 +29,16 @@ const TransferPage = () => {
 
   // Gọi API khi kho hiện tại được chọn
   useEffect(() => {
+    // Danh sách sản phẩm trong 1 kho
     if (employee?.warehouseId) {
       axiosInstance
         .get(
           `http://localhost:8888/v1/api/batches/warehouse/${employee.warehouseId}`,
         )
         .then((response) => {
-          const data: Product[] = response.data.map((item: any) => ({
+          const data: Product[] = response.data
+          .filter((item: any) => item.status !== 0) // Lọc các sản phẩm có status khác 0
+          .map((item: any) => ({
             image: "", // Cập nhật trường này nếu có
             productName: item.productName,
             category: "", // Cập nhật nếu có
@@ -154,8 +157,7 @@ const TransferPage = () => {
 
             // Xóa danh sách sản phẩm đã chọn sau khi xác nhận chuyển hàng
             setSelectedProducts([]);
-            console.log(JSON.stringify(payload,null,2));
-            
+            console.log(JSON.stringify(payload, null, 2));
           })
           .catch((error) => {
             // Kiểm tra phản hồi lỗi từ API
@@ -178,7 +180,6 @@ const TransferPage = () => {
               });
             }
           });
-          
       }
     });
   };
@@ -196,11 +197,9 @@ const TransferPage = () => {
     }
   };
 
-  const filteredProducts = availableProducts
-    .filter((product) =>
-      product.productName.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-    .slice(0, 3); // Giới hạn hiển thị 3 sản phẩm
+  const filteredProducts = availableProducts.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   const removeProductFromTransfer = (productId: number) => {
     setSelectedProducts(
@@ -211,7 +210,7 @@ const TransferPage = () => {
   const updateProductQuantity = (productId: number, newQuantity: number) => {
     // Tìm sản phẩm cần cập nhật
     const product = selectedProducts.find((item) => item.id === productId);
-  
+
     if (product) {
       // Kiểm tra điều kiện số lượng mới không vượt quá `quantityReturn`
       if (newQuantity > product.quantityReturn) {
@@ -225,14 +224,12 @@ const TransferPage = () => {
         // Cập nhật số lượng nếu hợp lệ
         setSelectedProducts(
           selectedProducts.map((item) =>
-            item.id === productId ? { ...item, quantity: newQuantity } : item
-          )
+            item.id === productId ? { ...item, quantity: newQuantity } : item,
+          ),
         );
       }
     }
   };
-  
-  
 
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -262,7 +259,7 @@ const TransferPage = () => {
   // Sản phẩm phân trang
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = availableProducts.slice(
+  const currentProducts = filteredProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct,
   );
@@ -313,6 +310,12 @@ const TransferPage = () => {
 
   return (
     <div className="mx-auto w-full max-w-5xl rounded-xl bg-gradient-to-r from-blue-50 to-white p-6 text-black shadow-lg">
+       <button
+          className="text-sm bg-gray-300 hover:bg-gray-400 focus:ring-gray-500 mb-5 rounded-md px-4 py-1 text-black shadow-lg focus:outline-none focus:ring-2"
+          onClick={() => window.history.back()}
+        >
+          ← Quay lại
+        </button>
       <h1 className="mb-6 text-center text-4xl font-bold text-blue-600">
         CHUYỂN HÀNG GIỮA CÁC KHO
       </h1>
@@ -390,7 +393,7 @@ const TransferPage = () => {
           placeholder="Nhập tên sản phẩm"
         />
         <ul className="mt-4 space-y-2">
-          {filteredProducts.map((product) => (
+          {currentProducts.map((product) => (
             <li
               key={product.id}
               className="flex items-center justify-between rounded-lg bg-white p-3 shadow-md transition-transform hover:scale-105"
@@ -402,7 +405,12 @@ const TransferPage = () => {
 
               <button
                 onClick={() => addProductToTransfer(product)}
-                className="flex items-center rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600"
+                disabled={product.quantity === 0} // Vô hiệu hóa nếu tồn kho bằng 0
+                className={`flex items-center rounded-lg px-4 py-2 text-white transition-colors ${
+                  product.quantity === 0
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600"
+                }`}
               >
                 <FaPlus className="mr-2" />
                 Thêm
@@ -436,7 +444,7 @@ const TransferPage = () => {
         <table className="min-w-full overflow-hidden rounded-lg bg-white shadow-lg">
           <thead>
             <tr className="text-gray-700 bg-blue-200">
-               <th className="px-6 py-3 text-left">ID</th>
+              <th className="px-6 py-3 text-left">ID</th>
               <th className="px-6 py-3 text-left">Tên Sản Phẩm</th>
               <th className="px-6 py-3 text-center">Số Lượng</th>
               <th className="px-6 py-3 text-center">Hành Động</th>
@@ -448,7 +456,7 @@ const TransferPage = () => {
                 key={product.id}
                 className="hover:bg-gray-100 border-b transition-colors"
               >
-                 <td className="px-6 py-3">MH000{product.id}</td>
+                <td className="px-6 py-3">MH000{product.id}</td>
                 <td className="px-6 py-3">{product.productName}</td>
                 <td className="px-6 py-3 text-center">
                   <input
@@ -457,7 +465,7 @@ const TransferPage = () => {
                     onChange={(e) =>
                       updateProductQuantity(
                         product.id,
-                     
+
                         Math.max(Number(e.target.value), 1),
                       )
                     }

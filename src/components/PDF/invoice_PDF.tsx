@@ -44,7 +44,7 @@ export const handlePrintPDF = async (invoice: any, invoiceDetails: any[]) => {
   // Add sub-header with invoice info
   doc.setFontSize(12);
   doc.text(`Mã Hóa Đơn: DH000${invoice.id}`, 20, 30);
-  doc.text(`Ngày: ${format(new Date(invoice.printDate), 'dd/MM/yyyy - HH:mm:ss')}`, 20, 40);
+  doc.text(`Ngày: ${format(new Date(invoice.paymentDate), 'dd/MM/yyyy - HH:mm:ss')}`, 20, 40);
   doc.text(`Khách Hàng: ${invoice.contactInfo}`, 20, 50);
   doc.text(`Trạng Thái: ${invoice.status}`, 20, 60);
 

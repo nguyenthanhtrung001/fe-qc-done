@@ -368,7 +368,8 @@ const TableReceipt = () => {
                         </button>
                       )}
                     {receipt.status !== "Tồn tại trả hàng" &&
-                      receipt.status !== "Đã trả toàn bộ" && (
+                      receipt.status !== "Đã trả toàn bộ" &&
+                      receipt.supplier !== "Chuyển kho" &&(
                         <button
                           className="hover:bg-red-700 rounded bg-red px-4 py-2 font-bold text-white"
                           onClick={() =>

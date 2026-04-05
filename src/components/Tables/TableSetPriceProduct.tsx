@@ -260,25 +260,30 @@ const TableProduct = () => {
         </div>
       ))}
 
-      <div className="flex justify-between px-4 py-3">
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-          className="rounded border px-3 py-1"
-        >
-          Trang trước
-        </button>
-        <span>
-          Trang {currentPage} / {totalPages}
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className="rounded border px-3 py-1"
-        >
-          Trang sau
-        </button>
-      </div>
+<div className="flex justify-center items-center space-x-4 px-4 py-3">
+  <button
+    onClick={handlePreviousPage}
+    disabled={currentPage === 1}
+    className={`rounded border px-3 py-1 ${
+      currentPage === 1 ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "hover:bg-blue-100"
+    }`}
+  >
+    Trước
+  </button>
+  <span className="text-gray-600">
+     <strong>{currentPage}</strong> / {totalPages}
+  </span>
+  <button
+    onClick={handleNextPage}
+    disabled={currentPage === totalPages}
+    className={`rounded border px-3 py-1 ${
+      currentPage === totalPages ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "hover:bg-blue-100"
+    }`}
+  >
+    Sau
+  </button>
+</div>
+
     </div>
   );
 };

@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import Switcher from "@/components/Switchers/SwitcherThree";
 import { useEmployeeStore } from "@/stores/employeeStore";
+import axios from "axios";
 
 
 const FormAddEmployee: React.FC = () => {
@@ -111,10 +112,21 @@ const FormAddEmployee: React.FC = () => {
         }).then(() => {
           window.location.reload(); // Tải lại trang sau khi tạo mới
         });
-      } catch (error) {
+      }  catch (error: any) {
+        let errorMessage = "Có lỗi xảy ra khi gửi dữ liệu.";
+  
+        if (axios.isAxiosError(error) && error.response) {
+          // Kiểm tra chi tiết lỗi từ phản hồi API
+          if (error.response.data && error.response.data.message) {
+            errorMessage = error.response.data.message;
+          } else if (error.response.data) {
+            errorMessage = JSON.stringify(error.response.data);
+          }
+        }
+  
         Swal.fire({
           title: "Lỗi!",
-          text: "Có lỗi xảy ra khi gửi dữ liệu.",
+          text: errorMessage, // Hiển thị lỗi chi tiết
           icon: "error",
         });
       }

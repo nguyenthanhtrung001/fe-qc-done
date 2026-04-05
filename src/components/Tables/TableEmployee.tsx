@@ -185,7 +185,8 @@ const TableEmployee = () => {
     if (result.isConfirmed) {
       try {
         await axiosInstance.delete(
-          `http://localhost:8888/v1/api/employees/${employeeId}noooooooooooooooooooo`,
+          `http://localhost:8888/v1/api/employees/${employeeId}`,
+          
         );
         Swal.fire({
           icon: "success",

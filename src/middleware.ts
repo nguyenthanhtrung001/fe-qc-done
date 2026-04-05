@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { decodePayload } from './utils/jwtUtils';
 import { fetchUserPermissions } from './utils/api';
+
 const defaultMenuGroups = [
   {
     name: "MENU",
@@ -154,52 +155,63 @@ function getAccessibleRoutes(menuGroups: any, userPermissions: string[]): string
   return routes;
 }
 
+// export async function middleware(request: NextRequest) {
+//   const { pathname } = request.nextUrl;
+//   const sessionToken = request.cookies.get('authToken')?.value;
+
+//   console.log('Đường dẫn hiện tại:', pathname);
+//   console.log('Token phiên hiện tại:', sessionToken);
+
+//   if (isStaticPath(pathname)) return NextResponse.next();
+
+//   if (!sessionToken) return handleUnauthenticatedAccess(pathname, request.url);
+
+//   const payload = decodePayload(sessionToken);
+//   if (payload && isTokenExpired(payload)) {
+//     return handleTokenExpired(request);
+//   }
+
+//   let userRole = null;
+//   let userPermissions = [];
+//   try {
+//     const userInfo = await fetchUserPermissions(sessionToken);
+//     if (userInfo) {
+//       userRole = userInfo.roleName;
+//       userPermissions = userInfo.permissions;
+//       console.log('Vai trò người dùng:', userRole);
+//       console.log('Quyền hạn người dùng:', userPermissions);
+//     } else {
+//       console.error('Lỗi khi lấy thông tin người dùng:', userInfo);
+//       return handleInvalidToken(request);
+//     }
+//   } catch (error) {
+//     console.error('Lỗi khi gọi API:', error);
+//     return handleInvalidToken(request);
+//   }
+
+//   if (isAuthenticatedPath(pathname) && userRole) {
+//     return redirectToRoleHome(userRole, request.url);
+//   }
+
+//   // Tạo mảng đường dẫn tham chiếu từ `defaultMenuGroups` và `userPermissions`
+//   const accessibleRoutes = getAccessibleRoutes(defaultMenuGroups, userPermissions);
+
+//   // if (!accessibleRoutes.some(route => pathname.startsWith(route))) {
+//   //   console.log('Người dùng không có quyền truy cập, chuyển hướng đến trang chính');
+//   //   if (pathname === '/unauthorized') {
+//   //     return NextResponse.next(); // Cho phép truy cập trang chính
+//   //   }
+//   //   return NextResponse.redirect(new URL('/unauthorized', request.url)); // Chuyển hướng đến trang chính
+//   // }
+  
+
+//   return NextResponse.next();
+// }
+
+//
+
+// tắt
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const sessionToken = request.cookies.get('authToken')?.value;
-
-  console.log('Đường dẫn hiện tại:', pathname);
-  console.log('Token phiên hiện tại:', sessionToken);
-
-  if (isStaticPath(pathname)) return NextResponse.next();
-
-  if (!sessionToken) return handleUnauthenticatedAccess(pathname, request.url);
-
-  const payload = decodePayload(sessionToken);
-  if (payload && isTokenExpired(payload)) {
-    return handleTokenExpired(request);
-  }
-
-  let userRole = null;
-  let userPermissions = [];
-  try {
-    const userInfo = await fetchUserPermissions(sessionToken);
-    if (userInfo) {
-      userRole = userInfo.roleName;
-      userPermissions = userInfo.permissions;
-      console.log('Vai trò người dùng:', userRole);
-      console.log('Quyền hạn người dùng:', userPermissions);
-    } else {
-      console.error('Lỗi khi lấy thông tin người dùng:', userInfo);
-      return handleInvalidToken(request);
-    }
-  } catch (error) {
-    console.error('Lỗi khi gọi API:', error);
-    return handleInvalidToken(request);
-  }
-
-  if (isAuthenticatedPath(pathname) && userRole) {
-    return redirectToRoleHome(userRole, request.url);
-  }
-
-  // Tạo mảng đường dẫn tham chiếu từ `defaultMenuGroups` và `userPermissions`
-  const accessibleRoutes = getAccessibleRoutes(defaultMenuGroups, userPermissions);
-
-  // if (!accessibleRoutes.some(route => pathname.startsWith(route))) {
-  //   console.log('Người dùng không có quyền truy cập, chuyển hướng đến trang không được phép');
-  //   return NextResponse.redirect(new URL('/unauthorized', request.url));
-  // }
-
   return NextResponse.next();
 }
 
