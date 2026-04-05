@@ -123,7 +123,7 @@ const OrderInfo: React.FC<OrderInfoProps> = ({
     try {
       // Gửi dữ liệu POST
       await axios.post(
-        "http://localhost:8888/v1/api/locations",
+        "https://api-gateway-twzq.onrender.com/v1/api/locations",
         updatedLocationData,
       );
 
@@ -153,7 +153,7 @@ const OrderInfo: React.FC<OrderInfoProps> = ({
     try {
       if (!employee || !employee.warehouseId) return;
       const response = await axios.get<Location[]>(
-        `http://localhost:8888/v1/api/locations/warehouse/${employee?.warehouseId}`,
+        `https://api-gateway-twzq.onrender.com/v1/api/locations/warehouse/${employee?.warehouseId}`,
       );
       console.log("Fetched locations:", response.data);
       setLocations(response.data);

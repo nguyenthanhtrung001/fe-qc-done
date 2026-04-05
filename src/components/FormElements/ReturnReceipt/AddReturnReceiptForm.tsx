@@ -136,7 +136,7 @@ const UpdateReceipt: React.FC = () => {
   
         console.log('Dữ liệu gửi đi:', JSON.stringify(data));
   
-        const response = await axiosInstance.post('http://localhost:8888/v1/api/deliveryNotes', data);
+        const response = await axiosInstance.post('https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes', data);
   
         if (response.status === 200 || response.status === 201) {
           console.log('Phiếu nhập được gửi thành công');

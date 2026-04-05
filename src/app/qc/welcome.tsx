@@ -38,7 +38,7 @@ export default function QCScanPage() {
     const fetchEmployee = async () => {
       if (!employee || !employee.employeeName) {
         try {
-          const response = await axiosInstance.get(`http://localhost:8888/v1/api/employees/${employeeId}`); // Adjust endpoint as needed
+          const response = await axiosInstance.get(`https://api-gateway-twzq.onrender.com/v1/api/employees/${employeeId}`); // Adjust endpoint as needed
           setEmployee(response.data);
         } catch (error) {
           console.error('Failed to fetch employee:', error);

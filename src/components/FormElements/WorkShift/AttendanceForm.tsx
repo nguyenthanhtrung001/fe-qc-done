@@ -45,7 +45,7 @@ const AttendanceForm: React.FC<AttendanceFormProps> = ({ id, onClose }) => {
     if (id === undefined) return; // Không làm gì nếu id không được cung cấp
 
     axiosInstance
-      .get<AttendanceData>(`http://localhost:8888/v1/api/attendances/${id}`)
+      .get<AttendanceData>(`https://api-gateway-twzq.onrender.com/v1/api/attendances/${id}`)
       .then((response) => {
         const data = response.data;
         setAttendanceData(data);
@@ -95,7 +95,7 @@ const AttendanceForm: React.FC<AttendanceFormProps> = ({ id, onClose }) => {
     };
     
     axiosInstance
-      .put(`http://localhost:8888/v1/api/attendances/${attendanceData.id}`, updatedAttendanceData)
+      .put(`https://api-gateway-twzq.onrender.com/v1/api/attendances/${attendanceData.id}`, updatedAttendanceData)
       .then((response) => {
         Swal.fire('Thành công!', 'Dữ liệu đã được cập nhật.', 'success');
         onClose();

@@ -33,7 +33,7 @@ const TransferPage = () => {
     if (employee?.warehouseId) {
       axiosInstance
         .get(
-          `http://localhost:8888/v1/api/batches/warehouse/${employee.warehouseId}`,
+          `https://api-gateway-twzq.onrender.com/v1/api/batches/warehouse/${employee.warehouseId}`,
         )
         .then((response) => {
           const data: Product[] = response.data
@@ -79,7 +79,7 @@ const TransferPage = () => {
   useEffect(() => {
     if (employee?.warehouseId) {
       axiosInstance
-        .get(`http://localhost:8888/v1/api/warehouses`)
+        .get(`https://api-gateway-twzq.onrender.com/v1/api/warehouses`)
         .then((response) => {
           const data: Warehouse[] = response.data;
 
@@ -143,7 +143,7 @@ const TransferPage = () => {
 
         // Gọi API POST
         axiosInstance
-          .post("http://localhost:8888/v1/api/deliveryNotes/transfer", payload)
+          .post("https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/transfer", payload)
           .then((response) => {
             Swal.fire({
               icon: "success",
@@ -278,7 +278,7 @@ const TransferPage = () => {
       // Gọi lại API để lấy danh sách sản phẩm
       axiosInstance
         .get(
-          `http://localhost:8888/v1/api/batches/warehouse/${employee.warehouseId}`,
+          `https://api-gateway-twzq.onrender.com/v1/api/batches/warehouse/${employee.warehouseId}`,
         )
         .then((response) => {
           const data: Product[] = response.data.map((item: any) => ({

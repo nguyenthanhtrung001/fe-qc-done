@@ -21,7 +21,7 @@ const Header = (props: {
     if (!employee) return;
     const fetchWarehouses = async () => {
       try {
-        const response = await fetch("http://localhost:8888/v1/api/warehouses");
+        const response = await fetch("https://api-gateway-twzq.onrender.com/v1/api/warehouses");
         const data = await response.json();
         setWarehouses(data);
         // Thiết lập giá trị mặc định là kho đầu tiên trong danh sách

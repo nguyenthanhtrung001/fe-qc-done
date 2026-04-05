@@ -68,7 +68,7 @@ const RevenueBarChart = () => {
   useEffect(() => {
     // Gọi API để lấy dữ liệu doanh thu của các chi nhánh
     axios
-      .get<Warehouse[]>('http://localhost:8888/v1/api/warehouses/all-revenue')
+      .get<Warehouse[]>('https://api-gateway-twzq.onrender.com/v1/api/warehouses/all-revenue')
       .then((response) => {
         const warehouses = response.data;
         // Chuẩn bị dữ liệu cho biểu đồ

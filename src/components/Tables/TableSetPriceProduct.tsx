@@ -105,7 +105,7 @@ const TableProduct = () => {
             : product,
         );
 
-        await axiosInstance.post(`http://localhost:8888/v1/api/prices`, {
+        await axiosInstance.post(`https://api-gateway-twzq.onrender.com/v1/api/prices`, {
           price: editedPrice,
           productId: productId,
           employeeId: employee?.id,

@@ -16,7 +16,7 @@ const PayrollForm: React.FC<PayrollFormProps> = ({ payrollId }) => {
   useEffect(() => {
     const fetchPayroll = async () => {
       try {
-        const response = await axios.get<Payroll>(`http://localhost:8888/v1/api/payrolls/${payrollId}`);
+        const response = await axios.get<Payroll>(`https://api-gateway-twzq.onrender.com/v1/api/payrolls/${payrollId}`);
         const payrollData = response.data;
 
         if (payrollData) {
@@ -88,7 +88,7 @@ const PayrollForm: React.FC<PayrollFormProps> = ({ payrollId }) => {
       if (result.isConfirmed) {
         console.log('Dữ liệu payroll trước khi gửi:', JSON.stringify(payroll, null, 2));
 
-        await axios.put(`http://localhost:8888/v1/api/payrolls/${payroll.id}`, payroll);
+        await axios.put(`https://api-gateway-twzq.onrender.com/v1/api/payrolls/${payroll.id}`, payroll);
         
         Swal.fire(
           'Thành công!',

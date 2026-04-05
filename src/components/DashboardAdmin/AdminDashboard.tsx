@@ -41,7 +41,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8888/v1/api/return-notes/revenue-warehouse/monthly",
+        "https://api-gateway-twzq.onrender.com/v1/api/return-notes/revenue-warehouse/monthly",
       )
       .then((response) => {
         setMonthlyRevenue(response.data);
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
       });
 
     axios
-      .get("http://localhost:8888/v1/api/products/count")
+      .get("https://api-gateway-twzq.onrender.com/v1/api/products/count")
       .then((response) => {
         setProductCount(response.data);
       })
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
       });
 
     axios
-      .get("http://localhost:8888/v1/api/receipts/summary")
+      .get("https://api-gateway-twzq.onrender.com/v1/api/receipts/summary")
       .then((response) => {
         setOrderSummary(response.data);
       })
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
       });
     // Fetch employee count
     axios
-      .get("http://localhost:8888/v1/api/employees")
+      .get("https://api-gateway-twzq.onrender.com/v1/api/employees")
       .then((response) => {
         setEmployeeCount(response.data.length);
       })
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
 
     // Fetch customer count
     axios
-      .get("http://localhost:8888/v1/api/customers")
+      .get("https://api-gateway-twzq.onrender.com/v1/api/customers")
       .then((response) => {
         setCustomerCount(response.data.length);
       })
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
 
     // Fetch supplier count
     axios
-      .get("http://localhost:8888/v1/api/suppliers")
+      .get("https://api-gateway-twzq.onrender.com/v1/api/suppliers")
       .then((response) => {
         setSupplierCount(response.data.length);
       })
@@ -99,7 +99,7 @@ const AdminDashboard = () => {
     // Fetch delivery summary
     axios
       .get(
-        "http://localhost:8888/v1/api/deliveryNotes/delivery-summary?type=2&status=1",
+        "https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/delivery-summary?type=2&status=1",
       )
       .then((response) => {
         if (response.data.success) {
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
     // Fetch delivery summary
     axios
       .get(
-        "http://localhost:8888/v1/api/deliveryNotes/delivery-summary?type=1&status=1",
+        "https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/delivery-summary?type=1&status=1",
       )
       .then((response) => {
         if (response.data.success) {
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
       });
       axios
       .get(
-        "http://localhost:8888/v1/api/deliveryNotes/delivery-summary?type=3&status=2",
+        "https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/delivery-summary?type=3&status=2",
       )
       .then((response) => {
         if (response.data.success) {

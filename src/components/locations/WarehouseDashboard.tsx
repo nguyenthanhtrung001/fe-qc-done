@@ -25,7 +25,7 @@ const WarehouseDashboard: React.FC = () => {
       setLoadingLocations(true);
       if (!employee || !employee.warehouseId) return;
       try {
-        const response = await axios.get(`http://localhost:8888/v1/api/locations/warehouse/${employee.warehouseId}`);
+        const response = await axios.get(`https://api-gateway-twzq.onrender.com/v1/api/locations/warehouse/${employee.warehouseId}`);
         setLocations(response.data);
       } catch (error) {
         console.error("Error fetching locations:", error);
@@ -41,7 +41,7 @@ const WarehouseDashboard: React.FC = () => {
     setLoadingProducts(true);
     try {
       const response = await axios.get(
-        `http://localhost:8888/v1/api/batch-details/location/${location.id}`
+        `https://api-gateway-twzq.onrender.com/v1/api/batch-details/location/${location.id}`
       );
       setBatchDetails(response.data);
     } catch (error) {

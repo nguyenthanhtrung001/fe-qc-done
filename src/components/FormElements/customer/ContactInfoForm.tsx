@@ -203,7 +203,7 @@ const ContactInfoForm: React.FC<ContactInfoFormProps> = ({
         if (initialData?.customerName) {
          
           axios
-            .put(`http://localhost:8888/v1/api/contact-info/${initialData?.addressId}`, addressData)
+            .put(`https://api-gateway-twzq.onrender.com/v1/api/contact-info/${initialData?.addressId}`, addressData)
             .then(() => {
               onSave(addressData);
               Swal.fire('Thành công!', 'Dữ liệu đã được cập nhật.', 'success'); // Thông báo thành công
@@ -215,7 +215,7 @@ const ContactInfoForm: React.FC<ContactInfoFormProps> = ({
         } else {
           console.log("Data post: ", JSON.stringify(addressData,null,2));
           axios
-            .post("http://localhost:8888/v1/api/contact-info", addressData)
+            .post("https://api-gateway-twzq.onrender.com/v1/api/contact-info", addressData)
             .then(() => {
               onSave(addressData);
               Swal.fire('Thành công!', 'Dữ liệu đã được lưu.', 'success'); // Thông báo thành công

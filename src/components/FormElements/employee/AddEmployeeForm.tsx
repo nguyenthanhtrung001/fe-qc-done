@@ -52,7 +52,7 @@ const FormAddEmployee: React.FC = () => {
       try {
         setLoadingWarehouses(true);
         const response = await axiosInstance.get(
-          "http://localhost:8888/v1/api/warehouses",
+          "https://api-gateway-twzq.onrender.com/v1/api/warehouses",
         );
         setWarehouses(response.data);
       } catch (error) {

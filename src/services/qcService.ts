@@ -42,7 +42,7 @@ export interface ApiResponse<T> {
 }
 
 const qcAxios = axios.create({
-  baseURL: 'http://localhost:8888/v1/api/qc',
+  baseURL: 'https://api-gateway-twzq.onrender.com/v1/api/qc',
 });
 
 export const qcService = {

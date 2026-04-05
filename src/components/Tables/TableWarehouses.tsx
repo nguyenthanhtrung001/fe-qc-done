@@ -35,7 +35,7 @@ const WarehouseManagement: React.FC = () => {
   useEffect(() => {
     const fetchWarehouses = async () => {
       try {
-        const response = await axiosInstance.get("http://localhost:8888/v1/api/warehouses");
+        const response = await axiosInstance.get("https://api-gateway-twzq.onrender.com/v1/api/warehouses");
         setWarehouseList(response.data);
       } catch (error) {
         console.error("Error fetching warehouses:", error);
@@ -68,7 +68,7 @@ const WarehouseManagement: React.FC = () => {
   const handleFormSubmit = async (formData: Warehouse) => {
     try {
       if (editingWarehouse) {
-        await axiosInstance.put(`http://localhost:8888/v1/api/warehouses/${editingWarehouse.id}`, formData);
+        await axiosInstance.put(`https://api-gateway-twzq.onrender.com/v1/api/warehouses/${editingWarehouse.id}`, formData);
         setWarehouseList((prevList) =>
           prevList.map((warehouse) =>
             warehouse.id === editingWarehouse.id ? { ...warehouse, ...formData } : warehouse
@@ -79,7 +79,7 @@ const WarehouseManagement: React.FC = () => {
           description: 'Kho đã được cập nhật thành công!',
         });
       } else {
-        const response = await axiosInstance.post("http://localhost:8888/v1/api/warehouses", formData);
+        const response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/api/warehouses", formData);
         setWarehouseList((prevList) => [...prevList, response.data]);
         notification.success({
           message: 'Thêm Thành Công',
@@ -114,7 +114,7 @@ const WarehouseManagement: React.FC = () => {
   // Hàm xóa kho
   const deleteWarehouse = async (warehouseId: number) => {
     try {
-      await axiosInstance.delete(`http://localhost:8888/v1/api/warehouses/${warehouseId}`);
+      await axiosInstance.delete(`https://api-gateway-twzq.onrender.com/v1/api/warehouses/${warehouseId}`);
       setWarehouseList((prevList) => prevList.filter((warehouse) => warehouse.id !== warehouseId));
       message.success('Xóa kho thành công');
     } catch (error) {

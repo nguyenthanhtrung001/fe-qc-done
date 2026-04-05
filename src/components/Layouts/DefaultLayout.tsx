@@ -24,7 +24,7 @@ export default function DefaultLayout({
   useEffect(() => {
     const fetchChatConfig = async () => {
       try {
-        const response = await axios.get("http://localhost:8888/v1/identity/api/settings/chat-config");
+        const response = await axios.get("https://api-gateway-twzq.onrender.com/v1/identity/api/settings/chat-config");
         const configData = response.data.reduce((acc: any, curr: any) => {
           acc[curr.configKey] = curr.configValue; // Biến đổi mảng thành đối tượng với key là configKey
           return acc;

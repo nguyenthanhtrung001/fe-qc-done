@@ -8,7 +8,7 @@ const Brands = ({ selectedBrands, setSelectedBrands }) => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await axios.get("http://localhost:8888/v1/api/brands");
+        const response = await axios.get("https://api-gateway-twzq.onrender.com/v1/api/brands");
         setBrands(response.data);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu thương hiệu:", error);

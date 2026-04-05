@@ -138,7 +138,7 @@ const TableEmployee = () => {
     if (result.isConfirmed) {
       try {
         const response = await axiosInstance.post(
-          "http://localhost:8888/v1/api/employees/create-account",
+          "https://api-gateway-twzq.onrender.com/v1/api/employees/create-account",
           null,
           {
             params: {
@@ -185,7 +185,7 @@ const TableEmployee = () => {
     if (result.isConfirmed) {
       try {
         await axiosInstance.delete(
-          `http://localhost:8888/v1/api/employees/${employeeId}`,
+          `https://api-gateway-twzq.onrender.com/v1/api/employees/${employeeId}`,
           
         );
         Swal.fire({

@@ -12,7 +12,7 @@ const SettingsFetcher = ({ onIconUrlFetched }: SettingsFetcherProps) => {
     const fetchSettings = async () => {
       try {
         const response = await axiosInstance.get(
-          "http://localhost:8888/v1/identity/api/settings"
+          "https://api-gateway-twzq.onrender.com/v1/identity/api/settings"
         );
         const data = response.data;
 

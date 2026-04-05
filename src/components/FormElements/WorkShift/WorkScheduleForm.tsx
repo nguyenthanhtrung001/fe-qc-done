@@ -52,7 +52,7 @@ const WorkScheduleForm: React.FC = () => {
     if (result.isConfirmed) {
       try {
         // Gửi dữ liệu lên server bằng axios
-        const response = await axiosInstance.post("http://localhost:8888/v1/api/workshifts", payload);
+        const response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/api/workshifts", payload);
 
         // Nếu thành công, thông báo và reset form
         Swal.fire({

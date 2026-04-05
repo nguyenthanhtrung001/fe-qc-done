@@ -84,7 +84,7 @@ const Table: React.FC<TableProps> = ({ idSupplier, employee, year, month }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axiosInstance.get<Product[]>(`http://localhost:8888/v1/api/receipts/supplier/${idSupplier}`, {
+        const response = await axiosInstance.get<Product[]>(`https://api-gateway-twzq.onrender.com/v1/api/receipts/supplier/${idSupplier}`, {
           params: {
             warehouseId: employee?.warehouseId,
             year,

@@ -21,7 +21,7 @@ export default function BatchList() {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get("http://localhost:8888/v1/api/batch-details");
+        const response = await axios.get("https://api-gateway-twzq.onrender.com/v1/api/batch-details");
         const fetchedBatches = response.data || [];
         setBatches(fetchedBatches);
         setFilteredBatches(fetchedBatches);

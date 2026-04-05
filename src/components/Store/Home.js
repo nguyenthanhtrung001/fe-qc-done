@@ -28,7 +28,7 @@ const MainContent = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8888/v1/api/product-groups");
+        const response = await axios.get("https://api-gateway-twzq.onrender.com/v1/api/product-groups");
         setCategories(response.data);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu danh mục:", error);

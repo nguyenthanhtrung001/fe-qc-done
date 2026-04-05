@@ -116,7 +116,7 @@ const TableCancelItem = () => {
 
       if (result.isConfirmed) {
         await axiosInstance.delete(
-          `http://localhost:8888/v1/api/deliveryNotes/${id}`,
+          `https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/${id}`,
         );
 
         Swal.fire({

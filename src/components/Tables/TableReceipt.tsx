@@ -127,7 +127,7 @@ const TableReceipt = () => {
 
       if (result.isConfirmed) {
         await axiosInstance.delete(
-          `http://localhost:8888/v1/api/receipts/${receiptId}`,
+          `https://api-gateway-twzq.onrender.com/v1/api/receipts/${receiptId}`,
         );
         Swal.fire("Đã hủy!", "Phiếu nhập đã bị hủy.", "success");
         setReceipts((prevReceipts) =>

@@ -25,7 +25,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     if (customerId) {
-      axios.get(`http://localhost:8888/v1/api/invoices/customer/${customerId}`)
+      axios.get(`https://api-gateway-twzq.onrender.com/v1/api/invoices/customer/${customerId}`)
         .then(response => {
           const sortedOrders = response.data.sort((a, b) => new Date(b.printDate) - new Date(a.printDate));
           setOrders(sortedOrders);
@@ -42,7 +42,7 @@ const OrderHistory = () => {
       return;
     }
 
-    axios.get(`http://localhost:8888/v1/api/invoice-details/invoice/${invoiceId}`)
+    axios.get(`https://api-gateway-twzq.onrender.com/v1/api/invoice-details/invoice/${invoiceId}`)
       .then(response => {
         const updatedOrders = orders.map(order => {
           if (order.id === invoiceId) {

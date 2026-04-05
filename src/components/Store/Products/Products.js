@@ -23,7 +23,7 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8888/v1/api/products");
+        const response = await axios.get("https://api-gateway-twzq.onrender.com/v1/api/products");
         setProducts(response.data); // Đặt sản phẩm vào Zustand store
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu sản phẩm:", error);

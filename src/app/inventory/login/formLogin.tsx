@@ -27,7 +27,7 @@ const SignIn: React.FC = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:8888/v1/identity/auth/token", {
+      const response = await fetch("https://api-gateway-twzq.onrender.com/v1/identity/auth/token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
