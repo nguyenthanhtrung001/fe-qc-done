@@ -245,27 +245,20 @@ const FormAddEmployee: React.FC = () => {
             <FaUserTag /> Chức vụ
           </label>
           <select
-            name="position"
-            value={formData.position}
-            onChange={handleChange}
-            className="border-gray-300 mt-2 w-full rounded-lg border px-4 py-2 focus:ring-2 focus:ring-indigo-500"
-            required
-          >
-            {employee?.position.toLowerCase().includes("quản lý") &&
-              formData.position !== "Nhân viên" && (
-                <option value="Nhân viên">Nhân viên</option>
-              )}
+  name="position"
+  value={formData.position}
+  onChange={handleChange}
+  className="border-gray-300 mt-2 w-full rounded-lg border px-4 py-2 focus:ring-2 focus:ring-indigo-500"
+  required
+>
+  {/* Luôn có Nhân viên */}
+  <option value="Nhân viên">Nhân viên</option>
 
-            {employee?.position.toLowerCase().includes("admin") &&
-              formData.position !== "Quản lý" && (
-                <option value="Quản lý">Quản lý</option>
-              )}
-
-            {!employee?.position.toLowerCase().includes("quản lý") &&
-              !employee?.position.toLowerCase().includes("admin") && (
-                <option value="">Chọn vị trí</option>
-              )}
-          </select>
+  {/* Nếu là admin thì cho chọn Quản lý */}
+  {employee?.position?.toLowerCase().includes("admin") && (
+    <option value="Quản lý">Quản lý</option>
+  )}
+</select>
         </div>
 
         <div>

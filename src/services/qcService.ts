@@ -42,7 +42,7 @@ export interface ApiResponse<T> {
 }
 
 const qcAxios = axios.create({
-  baseURL: 'http://localhost:8080/api/qc',
+  baseURL: 'http://localhost:8888/v1/api/qc',
 });
 
 export const qcService = {

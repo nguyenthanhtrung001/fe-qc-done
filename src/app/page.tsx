@@ -1,4 +1,4 @@
-import Home from "./home/welcome";
+import Home from "./qc/welcome";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
