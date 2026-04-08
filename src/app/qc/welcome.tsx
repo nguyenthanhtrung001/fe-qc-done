@@ -32,21 +32,25 @@ export default function QCScanPage() {
   console.error('hello', employee);
 
   // Fetch employee data if not in store
-  useEffect(() => {
-      if (!employee) return;
+ useEffect(() => {
+  if (!employeeId) return;
 
-    const fetchEmployee = async () => {
-      if (!employee || !employee.employeeName) {
-        try {
-          const response = await axiosInstance.get(`https://api-gateway-twzq.onrender.com/v1/api/employees/${employeeId}`); // Adjust endpoint as needed
-          setEmployee(response.data);
-        } catch (error) {
-          console.error('Failed to fetch employee:', error);
-        }
-      }
-    };
+  const fetchEmployee = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `https://api-gateway-twzq.onrender.com/v1/api/employees/${employeeId}`
+      );
+      setEmployee(response.data);
+    } catch (error) {
+      console.error('Failed to fetch employee:', error);
+    }
+  };
+
+  // chỉ fetch khi chưa có employeeName
+  if (!employee?.employeeName) {
     fetchEmployee();
-  }, [employee, setEmployee]);
+  }
+}, [employeeId]); // 🔥 chỉ depend vào employeeId
 
   const [qcCode, setQcCode] = useState("");
   const [initValue, setInitValue] = useState(0);
