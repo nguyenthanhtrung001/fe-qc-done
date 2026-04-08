@@ -32,7 +32,7 @@ export default function QCScanPage() {
   console.error('hello', employee);
 
   // Fetch employee data if not in store
- useEffect(() => {
+useEffect(() => {
   if (!employeeId) return;
 
   const fetchEmployee = async () => {
@@ -50,7 +50,7 @@ export default function QCScanPage() {
   if (!employee?.employeeName) {
     fetchEmployee();
   }
-}, [employeeId]); // 🔥 chỉ depend vào employeeId
+}, [employeeId]); // 🔥 QUAN TRỌNG: chỉ depend employeeId;
 
   const [qcCode, setQcCode] = useState("");
   const [initValue, setInitValue] = useState(0);
