@@ -38,7 +38,7 @@ useEffect(() => {
   const fetchEmployee = async () => {
     try {
       const response = await axiosInstance.get(
-        `https://api-gateway-twzq.onrender.com/v1/api/employees/${employeeId}`
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/employees/${employeeId}`
       );
       setEmployee(response.data);
     } catch (error) {
@@ -64,7 +64,13 @@ useEffect(() => {
   const [kpiPercent, setKpiPercent] = useState(0);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const getTodayVN = () => {
+  return new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
+};
+
+const [date, setDate] = useState(getTodayVN());
   const [flashId, setFlashId] = useState<number | null>(null);
   const [searching, setSearching] = useState(false);
   const [leaderboard, setLeaderboard] = useState<LeaderboardItem[]>([]);
@@ -403,7 +409,9 @@ useEffect(() => {
                     <td className="px-4 py-3 text-slate-900">{item.id}</td>
                     <td className="px-4 py-3 font-medium text-slate-900">{item.qcCode}</td>
                     <td className="px-4 py-3 text-slate-500">
-                      {new Date(item.scanTime).toLocaleString("vi-VN")}
+                     {new Date(item.scanTime).toLocaleString("vi-VN", {
+  timeZone: "Asia/Ho_Chi_Minh"
+})}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button

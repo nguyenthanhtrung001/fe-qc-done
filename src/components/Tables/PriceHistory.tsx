@@ -27,7 +27,7 @@ const PriceHistory = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await axiosInstance.get("https://api-gateway-twzq.onrender.com/v1/api/prices");
+        const response = await axiosInstance.get(" https://causal-jawfish-immune.ngrok-free.app/v1/api/prices");
         const data = response.data.map((item: any) => ({
           id: item.id,
           effectiveDate: item.effectiveDate,

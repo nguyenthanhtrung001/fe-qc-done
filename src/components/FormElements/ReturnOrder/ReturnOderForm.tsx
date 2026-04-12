@@ -49,7 +49,7 @@ const Home: React.FC = () => {
 
   const fetchInvoicesById = async (invoiceId: string) => {
     try {
-      const response = await axios.get(`https://api-gateway-twzq.onrender.com/v1/api/invoice-details/invoice-not-decode/${invoiceId}`);
+      const response = await axios.get(` https://causal-jawfish-immune.ngrok-free.app/v1/api/invoice-details/invoice-not-decode/${invoiceId}`);
       const data = response.data;
       console.log('Fetched Data:', JSON.stringify(data, null, 2)); // Xuất dữ liệu dưới dạng JSON
 
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
       try {
         console.log('Dữ liệu gửi đi:', JSON.stringify(data));
 
-        const response = await axios.post('https://api-gateway-twzq.onrender.com/v1/api/return-notes', data);
+        const response = await axios.post(' https://causal-jawfish-immune.ngrok-free.app/v1/api/return-notes', data);
 
         if (response.status === 200 || response.status === 201) {
           console.log('Đơn hàng được gửi thành công');

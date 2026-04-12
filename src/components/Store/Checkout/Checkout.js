@@ -105,7 +105,7 @@ const Checkout = () => {
       if (result.isConfirmed) {
         try {
           // Gọi API để xác nhận thanh toán
-          const response = await axiosInstance.post('https://api-gateway-twzq.onrender.com/v1/api/invoices', data);
+          const response = await axiosInstance.post(' https://causal-jawfish-immune.ngrok-free.app/v1/api/invoices', data);
           console.log('Đơn hàng đã được xác nhận:', response.data);
 
           // Hiển thị thông báo thành công

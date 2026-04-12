@@ -16,7 +16,7 @@ const ReportPage = () => {
   useEffect(() => {
     const fetchInvoiceData = async (decryptedId: string) => {
       try {
-        const response = await axios.get(`https://api-gateway-twzq.onrender.com/v1/api/invoices/${decryptedId}`);
+        const response = await axios.get(` https://causal-jawfish-immune.ngrok-free.app/v1/api/invoices/${decryptedId}`);
         setInvoiceData(response.data);
       } catch (error) {
         console.error('Error fetching invoice data:', error);

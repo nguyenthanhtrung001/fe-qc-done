@@ -123,7 +123,7 @@ const OrderInfo: React.FC<OrderInfoProps> = ({
     try {
       // Gửi dữ liệu POST
       await axios.post(
-        "https://api-gateway-twzq.onrender.com/v1/api/locations",
+        " https://causal-jawfish-immune.ngrok-free.app/v1/api/locations",
         updatedLocationData,
       );
 
@@ -153,7 +153,7 @@ const OrderInfo: React.FC<OrderInfoProps> = ({
     try {
       if (!employee || !employee.warehouseId) return;
       const response = await axios.get<Location[]>(
-        `https://api-gateway-twzq.onrender.com/v1/api/locations/warehouse/${employee?.warehouseId}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/locations/warehouse/${employee?.warehouseId}`,
       );
       console.log("Fetched locations:", response.data);
       setLocations(response.data);

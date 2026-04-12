@@ -60,7 +60,7 @@ export default function WarehouseDashboard() {
       setLoadingLocations(true);
       try {
         const response = await axios.get(
-          "https://api-gateway-twzq.onrender.com/v1/api/locations",
+          " https://causal-jawfish-immune.ngrok-free.app/v1/api/locations",
         );
         setLocations(response.data);
       } catch (error) {
@@ -80,7 +80,7 @@ export default function WarehouseDashboard() {
 
     try {
       const response = await axios.get(
-        `https://api-gateway-twzq.onrender.com/v1/api/batch-details/location/${location.id}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/batch-details/location/${location.id}`,
       );
       setBatchDetails(response.data);
     } catch (error) {

@@ -21,7 +21,7 @@ const ProductDistributionPieChart = () => {
   useEffect(() => {
     // Gọi API để lấy dữ liệu phân bổ sản phẩm cho tháng hiện tại
     axios
-      .get('https://api-gateway-twzq.onrender.com/v1/api/invoice-details/products/quantities/current-month')
+      .get(' https://causal-jawfish-immune.ngrok-free.app/v1/api/invoice-details/products/quantities/current-month')
       .then((response) => {
         const products = response.data;
         const labels = products.map((product: { productName: any; }) => product.productName);

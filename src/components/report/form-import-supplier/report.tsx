@@ -17,7 +17,7 @@ const ReportPage = () => {
   useEffect(() => {
     const fetchSupplierName = async (id: number) => {
       try {
-        const response = await axiosInstance.get<{ supplierName: string }>(`https://api-gateway-twzq.onrender.com/v1/api/suppliers/${id}`);
+        const response = await axiosInstance.get<{ supplierName: string }>(` https://causal-jawfish-immune.ngrok-free.app/v1/api/suppliers/${id}`);
         setNameSupplier(response.data.supplierName);
       } catch (error) {
         console.error('Error fetching supplier name:', error);

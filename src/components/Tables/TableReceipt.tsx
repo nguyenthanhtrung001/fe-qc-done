@@ -127,7 +127,7 @@ const TableReceipt = () => {
 
       if (result.isConfirmed) {
         await axiosInstance.delete(
-          `https://api-gateway-twzq.onrender.com/v1/api/receipts/${receiptId}`,
+          ` https://causal-jawfish-immune.ngrok-free.app/v1/api/receipts/${receiptId}`,
         );
         Swal.fire("Đã hủy!", "Phiếu nhập đã bị hủy.", "success");
         setReceipts((prevReceipts) =>

@@ -138,7 +138,7 @@ const TableEmployee = () => {
     if (result.isConfirmed) {
       try {
         const response = await axiosInstance.post(
-          "https://api-gateway-twzq.onrender.com/v1/api/employees/create-account",
+          " https://causal-jawfish-immune.ngrok-free.app/v1/api/employees/create-account",
           null,
           {
             params: {
@@ -185,7 +185,7 @@ const TableEmployee = () => {
     if (result.isConfirmed) {
       try {
         await axiosInstance.delete(
-          `https://api-gateway-twzq.onrender.com/v1/api/employees/${employeeId}`,
+          ` https://causal-jawfish-immune.ngrok-free.app/v1/api/employees/${employeeId}`,
           
         );
         Swal.fire({

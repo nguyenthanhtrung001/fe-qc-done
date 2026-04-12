@@ -17,7 +17,7 @@ const ProductSuggestionList: React.FC<ProductSuggestionListProps> = ({ onProduct
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get<Product[]>('https://api-gateway-twzq.onrender.com/v1/api/products/propose');
+        const response = await axios.get<Product[]>(' https://causal-jawfish-immune.ngrok-free.app/v1/api/products/propose');
         setProducts(response.data);
         setLoading(false);
       } catch (error) {

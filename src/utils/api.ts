@@ -14,7 +14,7 @@ import axios from 'axios';
 
 export async function fetchUserInfo(sessionToken: string) {
   try {
-    const res = await axiosInstance.get('https://api-gateway-twzq.onrender.com/v1/identity/users/my-info', {
+    const res = await axiosInstance.get(' https://causal-jawfish-immune.ngrok-free.app/v1/identity/users/my-info', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionToken}`,
@@ -40,7 +40,7 @@ export async function fetchUserInfo(sessionToken: string) {
 
 export async function fetchUserPermissions(sessionToken: string) {
   try {
-    const res = await axiosInstance.get('https://api-gateway-twzq.onrender.com/v1/identity/users/my-info', {
+    const res = await axiosInstance.get(' https://causal-jawfish-immune.ngrok-free.app/v1/identity/users/my-info', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionToken}`,
@@ -115,7 +115,7 @@ export async function fetchEmployeeByAccountId(accountId: string): Promise<Emplo
 
 export async function fetchUserName() {
   try {
-    const res = await axiosInstance.get('https://api-gateway-twzq.onrender.com/v1/identity/users/my-info');
+    const res = await axiosInstance.get(' https://causal-jawfish-immune.ngrok-free.app/v1/identity/users/my-info');
 
     const data = res.data;
     if (data.code === 1000) {
@@ -137,7 +137,7 @@ export const fetchLowestProducts = async (quantity:number, warehouseId:number) =
   }
 
   try {
-    const response = await axiosInstance.get(`https://api-gateway-twzq.onrender.com/v1/api/products/notify-lowest`, {
+    const response = await axiosInstance.get(` https://causal-jawfish-immune.ngrok-free.app/v1/api/products/notify-lowest`, {
       params: {
         quantity: quantity,
         warehouseId: warehouseId,
@@ -156,7 +156,7 @@ export const fetchForecastData = async (): Promise<{
   forecastResults: ForecastResult[];
 }> => {
   try {
-    const response = await axiosInstance.get<ForecastAPIResponse>('https://api-gateway-twzq.onrender.com/v1/api/bigquery/forecast/result?warehouseId=3');
+    const response = await axiosInstance.get<ForecastAPIResponse>(' https://causal-jawfish-immune.ngrok-free.app/v1/api/bigquery/forecast/result?warehouseId=3');
 
     const { itemForecastTotal, forecastResults } = response.data;
 
@@ -209,7 +209,7 @@ export const fetchForecastData = async (): Promise<{
 // Hàm để train lại mô hình
 export const trainModel = async (): Promise<void> => {
   try {
-    await axiosInstance.post('https://api-gateway-twzq.onrender.com/v1/api/bigquery/train');
+    await axiosInstance.post(' https://causal-jawfish-immune.ngrok-free.app/v1/api/bigquery/train');
     notification.success({
       message: 'Train mô hình thành công',
       description: 'Mô hình đã được train lại thành công!',
@@ -237,7 +237,7 @@ const handleApiError = (error: unknown, defaultMessage: string): void => {
 export const fetchWebInfo = async () => {
   try {
     // Sử dụng axios để gọi API
-    const response = await axiosInstance.get("https://api-gateway-twzq.onrender.com/v1/identity/api/settings/web-info"); // URL của API thật
+    const response = await axiosInstance.get(" https://causal-jawfish-immune.ngrok-free.app/v1/identity/api/settings/web-info"); // URL của API thật
     
     // Kiểm tra phản hồi từ API
     if (response.status === 200) {
@@ -245,7 +245,7 @@ export const fetchWebInfo = async () => {
       const data = response.data;
 
       // Kiểm tra dữ liệu trả về có đầy đủ không
-      if (!data || !data.name || !data.iconUrl) {
+      if (!data || !data.name ) {
         throw new Error("Dữ liệu website không hợp lệ");
       }
 

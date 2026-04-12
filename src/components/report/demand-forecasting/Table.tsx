@@ -62,7 +62,7 @@ const Table = () => {
   useEffect(() => {
     const fetchPredictions = async () => {
       try {
-        const response = await axiosInstance.get<ProductPrediction[]>('https://api-gateway-twzq.onrender.com/v1/api/predict/list');
+        const response = await axiosInstance.get<ProductPrediction[]>(' https://causal-jawfish-immune.ngrok-free.app/v1/api/predict/list');
         setPredictions(response.data);
       } catch (error) {
         console.error('Error fetching predictions:', error);

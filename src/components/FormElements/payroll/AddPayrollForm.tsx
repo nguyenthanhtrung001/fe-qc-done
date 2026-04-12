@@ -75,7 +75,7 @@ export default function AddItemForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://api-gateway-twzq.onrender.com/v1/api/products', {
+      const response = await axios.post(' https://causal-jawfish-immune.ngrok-free.app/v1/api/products', {
         productName: item.name,
         weight: parseFloat(item.weight),
         description: '', // Update with actual description if needed

@@ -1,6 +1,6 @@
 // utils/apiRoutes.ts
 
-const BASE_URL = 'https://api-gateway-twzq.onrender.com/v1';
+const BASE_URL = ' https://causal-jawfish-immune.ngrok-free.app/v1';
 
 const API_ROUTES = {
     REVENUE:  (warehouseId : number) =>  `${BASE_URL}/api/return-notes/revenue/monthly?warehouseId=${warehouseId}`,

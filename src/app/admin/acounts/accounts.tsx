@@ -24,7 +24,7 @@ interface User {
   isLocked?: boolean;
 }
 
-const API_BASE_URL = 'https://api-gateway-twzq.onrender.com/v1/identity';
+const API_BASE_URL = ' https://causal-jawfish-immune.ngrok-free.app/v1/identity';
 
 const schema = yup.object().shape({
   name: yup.string().required('Vui lòng nhập tên'),

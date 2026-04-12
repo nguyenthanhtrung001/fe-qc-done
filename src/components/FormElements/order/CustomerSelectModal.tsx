@@ -68,7 +68,7 @@ const CustomerSelectModal: React.FC<CustomerSelectModalProps> = ({
   const fetchAddresses = async (customerId: number) => {
     try {
       const response = await axiosInstance.get<ContactInfo[]>(
-        `https://api-gateway-twzq.onrender.com/v1/api/contact-info/customer/${customerId}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/contact-info/customer/${customerId}`,
       );
       setAddresses(response.data);
     } catch (error) {
@@ -136,7 +136,7 @@ const CustomerSelectModal: React.FC<CustomerSelectModalProps> = ({
   
       if (result.isConfirmed) {
         // Gửi yêu cầu xóa địa chỉ
-        await axiosInstance.delete(`https://api-gateway-twzq.onrender.com/v1/api/contact-info/${addressId}`);
+        await axiosInstance.delete(` https://causal-jawfish-immune.ngrok-free.app/v1/api/contact-info/${addressId}`);
         
         Swal.fire("Đã xóa", "Địa chỉ đã được xóa thành công.", "success");
   

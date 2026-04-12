@@ -59,7 +59,7 @@ const SignupForm = () => {
 
     // Gọi API gửi dữ liệu bằng Axios
     try {
-      const response = await axios.post('https://api-gateway-twzq.onrender.com/v1/identity/users/registration', formData, {
+      const response = await axios.post(' https://causal-jawfish-immune.ngrok-free.app/v1/identity/users/registration', formData, {
         headers: {
           'Content-Type': 'application/json',
         },

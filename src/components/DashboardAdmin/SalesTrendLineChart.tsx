@@ -64,7 +64,7 @@ const SalesTrendLineChart = () => {
     // Hàm lấy dữ liệu từ API bằng axios
     const fetchData = async () => {
       try {
-        const response = await axios.get<RevenueData[]>('https://api-gateway-twzq.onrender.com/v1/api/return-notes/revenue-warehouse-12-month');
+        const response = await axios.get<RevenueData[]>(' https://causal-jawfish-immune.ngrok-free.app/v1/api/return-notes/revenue-warehouse-12-month');
         const data = response.data;
 
         // Lấy labels và data từ API response

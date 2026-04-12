@@ -31,7 +31,7 @@ const WageConfigurationForm: React.FC = () => {
   useEffect(() => {
     const fetchOriginalConfig = async () => {
       try {
-        const response = await axiosInstance.get('https://api-gateway-twzq.onrender.com/v1/api/wage-configurations');
+        const response = await axiosInstance.get(' https://causal-jawfish-immune.ngrok-free.app/v1/api/wage-configurations');
         const result = response.data;
        
         setOriginalConfig(result);
@@ -92,7 +92,7 @@ const WageConfigurationForm: React.FC = () => {
           hours: config.hours,
         });
   
-        await axiosInstance.post('https://api-gateway-twzq.onrender.com/v1/api/wage-configurations/create', {
+        await axiosInstance.post(' https://causal-jawfish-immune.ngrok-free.app/v1/api/wage-configurations/create', {
           latePenalty: config.latePenalty,
           bonus: config.bonus,
           earlyPenalty: config.earlyPenalty,

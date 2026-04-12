@@ -23,7 +23,7 @@ const ProductSuggestionList: React.FC<ProductSuggestionListProps> = ({ onProduct
       try {
         if (!employee || !employee.warehouseId) return;
         const warehouseId = employee?.warehouseId; // Ví dụ, thay thế bằng ID kho thực tế của bạn
-        const response = await axios.get<Product[]>('https://api-gateway-twzq.onrender.com/v1/api/products/expired', {
+        const response = await axios.get<Product[]>(' https://causal-jawfish-immune.ngrok-free.app/v1/api/products/expired', {
           params: {
             warehouseId: warehouseId
           }

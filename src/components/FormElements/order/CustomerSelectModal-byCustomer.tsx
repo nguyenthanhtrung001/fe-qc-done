@@ -60,7 +60,7 @@ const CustomerSelectModal: React.FC<CustomerSelectModalProps> = ({
   const fetchAddresses = async (customerId: number) => {
     try {
       const response = await axiosInstance.get<ContactInfo[]>(
-        `https://api-gateway-twzq.onrender.com/v1/api/contact-info/customer/${customerId}`
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/contact-info/customer/${customerId}`
       );
       setAddresses(response.data);
     } catch (error) {

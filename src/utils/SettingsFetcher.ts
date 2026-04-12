@@ -12,7 +12,7 @@ const SettingsFetcher = ({ onIconUrlFetched }: SettingsFetcherProps) => {
     const fetchSettings = async () => {
       try {
         const response = await axiosInstance.get(
-          "https://api-gateway-twzq.onrender.com/v1/identity/api/settings"
+          " https://causal-jawfish-immune.ngrok-free.app/v1/identity/api/settings"
         );
         const data = response.data;
 

@@ -69,7 +69,7 @@ export default function BatchList() {
       
       // Gửi yêu cầu cập nhật đến API
       await axios.put(
-        `https://api-gateway-twzq.onrender.com/v1/api/batches/${selectedBatchForUpdate.id}/expiry-date?expiryDate=${newExpiryDate}`
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/batches/${selectedBatchForUpdate.id}/expiry-date?expiryDate=${newExpiryDate}`
       );
 
       // Đóng modal trước khi hiển thị Swal
@@ -125,7 +125,7 @@ export default function BatchList() {
       console.log("data:", employee.warehouseId);
       try {
         const response = await axios.get(
-          `https://api-gateway-twzq.onrender.com/v1/api/batches/in-warehouse/${employee.warehouseId}`,
+          ` https://causal-jawfish-immune.ngrok-free.app/v1/api/batches/in-warehouse/${employee.warehouseId}`,
         );
 
         const fetchedBatches = response.data || []; // Đảm bảo mảng dữ liệu

@@ -116,7 +116,7 @@ const TableCancelItem = () => {
 
       if (result.isConfirmed) {
         await axiosInstance.delete(
-          `https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/${id}`,
+          ` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/${id}`,
         );
 
         Swal.fire({

@@ -50,7 +50,7 @@ export default function BatchDetailModal({
     const fetchBatchDetails = async () => {
       try {
         const response = await axios.get(
-          `https://api-gateway-twzq.onrender.com/v1/api/batch-details/batch/${batchId}`,
+          ` https://causal-jawfish-immune.ngrok-free.app/v1/api/batch-details/batch/${batchId}`,
         );
         setBatchDetails(response.data);
       } catch (error) {
@@ -69,7 +69,7 @@ export default function BatchDetailModal({
 
     try {
       const response = await axios.get(
-        `https://api-gateway-twzq.onrender.com/v1/api/locations/warehouse/${employee?.warehouseId}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/locations/warehouse/${employee?.warehouseId}`,
       );
       setLocations(response.data);
     } catch (error) {
@@ -90,7 +90,7 @@ export default function BatchDetailModal({
     );
     try {
       await axios.put(
-        `https://api-gateway-twzq.onrender.com/v1/api/batch-details/${selectedDetailId}?locationId=${selectedLocationId}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/batch-details/${selectedDetailId}?locationId=${selectedLocationId}`,
       );
       // Update batch details locally after a successful API call
       setBatchDetails((prev) =>

@@ -42,7 +42,7 @@ export interface ApiResponse<T> {
 }
 
 const qcAxios = axios.create({
-  baseURL: 'https://api-gateway-twzq.onrender.com/v1/api/qc',
+  baseURL: ' https://causal-jawfish-immune.ngrok-free.app/v1/api/qc',
 });
 
 export const qcService = {

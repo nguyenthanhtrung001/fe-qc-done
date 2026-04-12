@@ -58,7 +58,7 @@ const OrderApprovalPage = () => {
 
   const fetchOrders = () => {
     if (!employee || !employee.warehouseId) return;
-    axios.get(`https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/transfer?warehouseId=${employee?.warehouseId}`)
+    axios.get(` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/transfer?warehouseId=${employee?.warehouseId}`)
       .then(response => {
         const sortedOrders = response.data.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);  // Sắp xếp theo id giảm dần
         setOrders(sortedOrders);
@@ -84,7 +84,7 @@ const OrderApprovalPage = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/${orderId}`);
+          await axios.delete(` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/${orderId}`);
           setOrders(orders.filter(order => order.id !== orderId));
           Swal.fire("Đã hủy!", "Phiếu chuyển kho đã bị hủy.", "success");
         } catch (error) {
@@ -98,7 +98,7 @@ const OrderApprovalPage = () => {
   // Hàm lấy chi tiết đơn chuyển kho
   const fetchOrderDetails = async (orderId: number) => {
     try {
-      const response = await axios.get(`https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/${orderId}/details`);
+      const response = await axios.get(` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/${orderId}/details`);
       setProductDetails(response.data);
       console.log("data:1111", JSON.stringify(response.data, null, 2))
     } catch (error) {
@@ -141,7 +141,7 @@ const OrderApprovalPage = () => {
     if (result.isConfirmed) {
       try {
         const response = await axios.patch(
-          `https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/complete-transfer/${id}`
+          ` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/complete-transfer/${id}`
         );
   
         if (response.status === 204 || response.status === 200) {

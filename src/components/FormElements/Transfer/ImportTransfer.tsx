@@ -57,7 +57,7 @@ const OrderApprovalPage = () => {
     if (!employee || !employee.warehouseId) return;
     axios
       .get(
-        `https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/import-transfer?warehouseId=${employee?.warehouseId}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/import-transfer?warehouseId=${employee?.warehouseId}`,
       )
       .then((response) => {
         const sortedOrders = response.data.sort(
@@ -98,7 +98,7 @@ const OrderApprovalPage = () => {
   // Hàm lấy chi tiết sản phẩm cho một đơn hàng cụ thể
   const fetchOrderDetails = (orderId: number) => {
     axios
-      .get(`https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/${orderId}/details`)
+      .get(` https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/${orderId}/details`)
       .then((response) => {
         setProductDetails(response.data);
         setGlobalValue(
@@ -120,7 +120,7 @@ const OrderApprovalPage = () => {
     try {
       if (!employee || !employee.warehouseId) return;
       const response = await axios.get<Location[]>(
-        `https://api-gateway-twzq.onrender.com/v1/api/locations/warehouse/${employee?.warehouseId}`,
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/locations/warehouse/${employee?.warehouseId}`,
       );
       console.log("Fetched locations:", response.data); // Log data received from API
       setLocations(response.data);
@@ -157,7 +157,7 @@ const OrderApprovalPage = () => {
       console.log("data: ", JSON.stringify(payload, null, 2));
       // Gửi POST API
       axios
-        .post("https://api-gateway-twzq.onrender.com/v1/api/receipts/transfer", payload)
+        .post(" https://causal-jawfish-immune.ngrok-free.app/v1/api/receipts/transfer", payload)
         .then((response) => {
           Swal.fire(
             "Thành công",
@@ -202,7 +202,7 @@ const OrderApprovalPage = () => {
 
     axios
       .post(
-        ` https://api-gateway-twzq.onrender.com/v1/api/deliveryNotes/cancel-transfer/${selectedOrder.id}`,
+        `  https://causal-jawfish-immune.ngrok-free.app/v1/api/deliveryNotes/cancel-transfer/${selectedOrder.id}`,
         { reason: rejectionReason },
       )
       .then(() => {

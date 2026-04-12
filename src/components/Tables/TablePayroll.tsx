@@ -20,7 +20,7 @@ const TablePayroll = () => {
   const fetchPayrolls = useCallback(async () => {
     try {
       const response = await axiosInstance.get(
-        "https://api-gateway-twzq.onrender.com/v1/api/payrolls/group-by-working-period-status"
+        " https://causal-jawfish-immune.ngrok-free.app/v1/api/payrolls/group-by-working-period-status"
       );
       setPayrolls(response.data);
     } catch (error) {
@@ -35,7 +35,7 @@ const TablePayroll = () => {
   const fetchDetailedPayrolls = async (workingPeriod: string) => {
     try {
       const response = await axiosInstance.get(
-        `https://api-gateway-twzq.onrender.com/v1/api/payrolls/working-period?workingPeriod=${encodeURIComponent(
+        ` https://causal-jawfish-immune.ngrok-free.app/v1/api/payrolls/working-period?workingPeriod=${encodeURIComponent(
           workingPeriod
         )}`
       );

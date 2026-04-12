@@ -26,7 +26,7 @@ export default function LocationPage() {
   const fetchLocations = async () => {
     if (!employee || !employee.warehouseId) return;
     try {
-      const response = await axiosInstance.get<Location[]>(`https://api-gateway-twzq.onrender.com/v1/api/locations/warehouse/${employee.warehouseId}`) ;
+      const response = await axiosInstance.get<Location[]>(` https://causal-jawfish-immune.ngrok-free.app/v1/api/locations/warehouse/${employee.warehouseId}`) ;
       console.log("Data location: ", response);
       setLocations(response.data);
     } catch (error) {
@@ -61,7 +61,7 @@ export default function LocationPage() {
   
       if (result.isConfirmed) {
         // Nếu người dùng xác nhận, tiến hành xóa
-        await axiosInstance.delete(`https://api-gateway-twzq.onrender.com/v1/api/locations/${id}`);
+        await axiosInstance.delete(` https://causal-jawfish-immune.ngrok-free.app/v1/api/locations/${id}`);
         fetchLocations();
   
         // Hiển thị thông báo xóa thành công
@@ -118,13 +118,13 @@ export default function LocationPage() {
           console.log("Gửi yêu cầu cập nhật:", updatedLocationData);
           // Gửi yêu cầu cập nhật
           response = await axiosInstance.put(
-            `https://api-gateway-twzq.onrender.com/v1/api/locations/${selectedLocation.id}`,
+            ` https://causal-jawfish-immune.ngrok-free.app/v1/api/locations/${selectedLocation.id}`,
             updatedLocationData
           );
         } else {
           console.log("Gửi yêu cầu thêm mới:", updatedLocationData);
           // Gửi yêu cầu thêm mới
-          response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/api/locations", updatedLocationData);
+          response = await axiosInstance.post(" https://causal-jawfish-immune.ngrok-free.app/v1/api/locations", updatedLocationData);
         }
   
         // Lấy dữ liệu phản hồi từ API sau khi thành công

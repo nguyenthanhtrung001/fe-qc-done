@@ -109,7 +109,7 @@ const Table: React.FC<TableProps> = ({ orderId }) => {
     const fetchProducts = async () => {
       if (orderId) {
         try {
-          const response = await axiosInstance.get<Product[]>(`https://api-gateway-twzq.onrender.com/v1/api/invoice-details/invoice/${orderId}`);
+          const response = await axiosInstance.get<Product[]>(` https://causal-jawfish-immune.ngrok-free.app/v1/api/invoice-details/invoice/${orderId}`);
           const data = response.data;
           setProducts(data);
 

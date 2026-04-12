@@ -52,7 +52,7 @@ const FormAddEmployee: React.FC = () => {
       try {
         setLoadingWarehouses(true);
         const response = await axiosInstance.get(
-          "https://api-gateway-twzq.onrender.com/v1/api/warehouses",
+          " https://causal-jawfish-immune.ngrok-free.app/v1/api/warehouses",
         );
         setWarehouses(response.data);
       } catch (error) {

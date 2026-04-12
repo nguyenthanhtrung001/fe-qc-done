@@ -31,7 +31,7 @@ const SettingsPage = () => {
  useEffect(() => {
   const fetchSettings = async () => {
     try {
-      const response = await axiosInstance.get("https://api-gateway-twzq.onrender.com/v1/identity/api/settings");
+      const response = await axiosInstance.get(" https://causal-jawfish-immune.ngrok-free.app/v1/identity/api/settings");
       const data = response.data;
 
       // Map API response to form values
@@ -86,7 +86,7 @@ const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 // Hàm xử lý submit form
 const onSubmit = async (data: SettingsFormData) => {
   try {
-    const response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/identity/api/settings", data);
+    const response = await axiosInstance.post(" https://causal-jawfish-immune.ngrok-free.app/v1/identity/api/settings", data);
     Swal.fire({
       icon: "success",
       title: "Lưu thành công",
@@ -106,7 +106,7 @@ const onSubmit = async (data: SettingsFormData) => {
   const handleSaveWebsite = async (data: { websiteName: string, websiteIcon: string }) => {
     try {
       console.log("Saving website settings:", JSON.stringify(data, null, 2));
-      const response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/identity/api/settings/website", data);
+      const response = await axiosInstance.post(" https://causal-jawfish-immune.ngrok-free.app/v1/identity/api/settings/website", data);
       setSettings(prevState => ({
         ...prevState,
         websiteName: data.websiteName,
@@ -130,7 +130,7 @@ const onSubmit = async (data: SettingsFormData) => {
   const handleSaveChatSettings = async (data: { botId: string, script: string, token: string, chatTitle: string }) => {
     try {
       console.log("Saving chat settings:", data);
-      const response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/identity/api/settings/chat", data);
+      const response = await axiosInstance.post(" https://causal-jawfish-immune.ngrok-free.app/v1/identity/api/settings/chat", data);
       setSettings(prevState => ({
         ...prevState,
         botId: data.botId,

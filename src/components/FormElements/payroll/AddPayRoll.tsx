@@ -38,7 +38,7 @@ const CreatePayrollForm: React.FC = () => {
     if (result.isConfirmed) {
       try {
         // Gửi dữ liệu lên server bằng axios
-        const response = await axiosInstance.post("https://api-gateway-twzq.onrender.com/v1/api/payrolls/create-all", payload);
+        const response = await axiosInstance.post(" https://causal-jawfish-immune.ngrok-free.app/v1/api/payrolls/create-all", payload);
 
         Swal.fire({
           title: "Thành công!",
