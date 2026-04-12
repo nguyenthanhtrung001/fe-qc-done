@@ -4,6 +4,8 @@ import { qcService, QCItem, LeaderboardItem } from "@/services/qcService";
 import { useEmployeeStore, initializeEmployeeFromLocalStorage } from '@/stores/employeeStore';
 import axiosInstance from '@/utils/axiosInstance';
 import { Trash2 } from "lucide-react";
+// 🔥 ĐẶT Ở NGOÀI COMPONENT (QUAN TRỌNG)
+axiosInstance.defaults.headers.common["ngrok-skip-browser-warning"] = "true";
 
 const defaultQcType = "Standard";
 
