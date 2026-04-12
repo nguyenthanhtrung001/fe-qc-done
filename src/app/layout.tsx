@@ -6,6 +6,12 @@ import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 
+// 🔥 THÊM DÒNG NÀY
+import axios from "axios";
+
+// 🔥 ĐẶT Ở NGOÀI COMPONENT (QUAN TRỌNG)
+axios.defaults.headers.common["ngrok-skip-browser-warning"] = "true";
+
 export default function RootLayout({
   children,
 }: Readonly<{
