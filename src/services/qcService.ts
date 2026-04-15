@@ -35,6 +35,18 @@ export interface LeaderboardItem {
   total: number;
 }
 
+export interface QcProcessResult {
+  qcCode: string;
+  fulfillmentType: string;
+  mappedType: 'PASS' | 'FAIL' | 'MISS';
+  updateStatus: 'success' | 'fail' | 'miss';
+  attempts: number;
+}
+
+export interface MissQcRecord extends QcProcessResult {
+  checkedAt: string;
+}
+
 export interface ApiResponse<T> {
   code: number;
   message: string;
@@ -81,5 +93,19 @@ export const qcService = {
   async getLeaderboard(date: string): Promise<LeaderboardItem[]> {
     const response = await qcAxios.get<ApiResponse<LeaderboardItem[]>>(`/leaderboard?date=${date}`);
     return response.data.result;
+  },
+
+  async processQC(qcCode: string): Promise<QcProcessResult> {
+    const response = await axiosInstance.post<{ success: boolean; result: QcProcessResult }>(
+      '/api/qc/process',
+      { qcCode },
+    );
+
+    return response.data.result;
+  },
+
+  async getMissQcList(): Promise<MissQcRecord[]> {
+    const response = await axiosInstance.get<{ success: boolean; result: MissQcRecord[] }>('/api/qc/type/miss');
+    return response.data.result ?? [];
   },
 };

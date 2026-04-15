@@ -4,6 +4,19 @@ import { qcService, QCItem, LeaderboardItem } from "@/services/qcService";
 import { useEmployeeStore, initializeEmployeeFromLocalStorage } from '@/stores/employeeStore';
 import axiosInstance from '@/utils/axiosInstance';
 import { Trash2 } from "lucide-react";
+import LogoutButton from "@/components/Button/button_logout";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Bar,
+  Line,
+  Legend,
+} from "recharts";
+import type { MissQcRecord } from "@/services/qcService";
 // 🔥 ĐẶT Ở NGOÀI COMPONENT (QUAN TRỌNG)
 axiosInstance.defaults.headers.common["ngrok-skip-browser-warning"] = "true";
 
@@ -76,6 +89,8 @@ const [date, setDate] = useState(getTodayVN());
   const [flashId, setFlashId] = useState<number | null>(null);
   const [searching, setSearching] = useState(false);
   const [leaderboard, setLeaderboard] = useState<LeaderboardItem[]>([]);
+  const [missRows, setMissRows] = useState<MissQcRecord[]>([]);
+  const [checkingMiss, setCheckingMiss] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [page, setPage] = useState(1);
@@ -83,6 +98,45 @@ const [date, setDate] = useState(getTodayVN());
   const kpiMeta = getKpiMeta(kpiPercent);
   const pageCount = Math.max(1, Math.ceil(filteredList.length / pageSize));
   const pageItems = filteredList.slice((page - 1) * pageSize, page * pageSize);
+
+  const qcHourlyChartData = React.useMemo(() => {
+    const hourlyCounts = Array.from({ length: 24 }, (_, hour) => ({
+      hour,
+      label: `${hour.toString().padStart(2, "0")}h`,
+      scans: 0,
+      cumulative: 0,
+    }));
+
+    qcList.forEach((item) => {
+      const hourValue = Number(
+        new Intl.DateTimeFormat("en-GB", {
+          hour: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Ho_Chi_Minh",
+        }).format(new Date(item.scanTime)),
+      );
+
+      if (Number.isFinite(hourValue) && hourValue >= 0 && hourValue <= 23) {
+        hourlyCounts[hourValue].scans += 1;
+      }
+    });
+
+    let runningTotal = 0;
+    return hourlyCounts.map((item) => {
+      runningTotal += item.scans;
+      return {
+        ...item,
+        cumulative: runningTotal,
+      };
+    });
+  }, [qcList]);
+
+  const busiestHour = React.useMemo(() => {
+    return qcHourlyChartData.reduce(
+      (max, item) => (item.scans > max.scans ? item : max),
+      qcHourlyChartData[0] ?? { scans: 0, label: "00h" },
+    );
+  }, [qcHourlyChartData]);
 
   useEffect(() => {
     initializeEmployeeFromLocalStorage();
@@ -250,35 +304,86 @@ const [date, setDate] = useState(getTodayVN());
     }
   };
 
+  const handleCheckMiss = async () => {
+    if (!filteredList.length) {
+      alert("Không có QC để check miss.");
+      return;
+    }
+
+    setCheckingMiss(true);
+    setMissRows([]);
+
+    try {
+      for (const item of filteredList) {
+        try {
+          const result = await qcService.processQC(item.qcCode);
+          setMissRows((prev) => [
+            ...prev,
+            {
+              ...result,
+              checkedAt: new Date().toISOString(),
+            },
+          ]);
+        } catch (error) {
+          console.error("Failed to process miss QC:", item.qcCode, error);
+          setMissRows((prev) => [
+            ...prev,
+            {
+              qcCode: item.qcCode,
+              fulfillmentType: "error",
+              mappedType: "MISS",
+              updateStatus: "fail",
+              attempts: 0,
+              checkedAt: new Date().toISOString(),
+            },
+          ]);
+        }
+      }
+
+      const reloadedMissRows = await qcService.getMissQcList();
+      setMissRows(reloadedMissRows);
+    } catch (error) {
+      console.error("Failed to check miss QC:", error);
+      alert("Check miss thất bại. Vui lòng thử lại.");
+    } finally {
+      setCheckingMiss(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-blue-200 text-slate-900">
       <div className="mx-auto max-w-[1600px] px-5 py-5">
         <div className="rounded-3xl border border-white/70 bg-white/85 p-6 shadow-2xl shadow-slate-200/70">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">QC Scan Dashboard</p>
-              <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
-                Theo dõi QC {employee?.employeeName ? `- ${employee.employeeName}` : ''}
-              </h1>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-3xl bg-gradient-to-r from-violet-500 via-indigo-600 to-sky-500 p-4 text-white shadow-lg shadow-violet-200/50">
-                <p className="text-xs uppercase tracking-[0.2em] opacity-80">Tổng QC hôm nay</p>
-                <p className="mt-3 text-3xl font-bold">{total}</p>
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div className="space-y-4 md:flex-1">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">QC Scan Dashboard</p>
+                <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900">
+                  Theo dõi QC {employee?.employeeName ? `- ${employee.employeeName}` : ''}
+                </h1>
               </div>
-              <div className="rounded-3xl bg-white p-4 shadow-lg shadow-slate-200/80">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Tốc độ trung bình</p>
-                <p className="mt-3 text-3xl font-bold text-slate-900">{avgSpeed.toFixed(2)} QC/s</p>
-              </div>
-              <div className="rounded-3xl bg-white p-4 shadow-lg shadow-slate-200/80">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">KPI</p>
-                <div className="mt-3 flex items-center justify-between gap-3">
-                  <p className={`text-lg font-semibold ${kpiMeta.text}`}>{kpiPercent}%</p>
-                  <div className="flex-1 rounded-full bg-slate-100 px-2 py-2">
-                    <div className={`h-2 rounded-full ${kpiMeta.bar}`} style={{ width: `${Math.min(kpiPercent, 100)}%` }} />
+              <div className="grid gap-3 sm:grid-cols-3 sm:auto-rows-fr">
+                <div className="h-full rounded-3xl bg-gradient-to-r from-violet-500 via-indigo-600 to-sky-500 p-4 text-white shadow-lg shadow-violet-200/50">
+                  <p className="text-xs uppercase tracking-[0.2em] opacity-80">Tổng QC hôm nay</p>
+                  <p className="mt-3 text-3xl font-bold">{total}</p>
+                </div>
+                <div className="h-full rounded-3xl bg-white p-4 shadow-lg shadow-slate-200/80">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Tốc độ trung bình</p>
+                  <p className="mt-3 text-3xl font-bold text-slate-900">{avgSpeed.toFixed(2)} s/QC</p>
+                </div>
+                <div className="h-full rounded-3xl bg-white p-4 shadow-lg shadow-slate-200/80">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">KPI</p>
+                  <div className="mt-3 flex items-center justify-between gap-3">
+                    <p className={`text-lg font-semibold ${kpiMeta.text}`}>{kpiPercent}%</p>
+                    <div className="flex-1 rounded-full bg-slate-100 px-2 py-2">
+                      <div className={`h-2 rounded-full ${kpiMeta.bar}`} style={{ width: `${Math.min(kpiPercent, 100)}%` }} />
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="w-full md:ml-auto md:w-auto md:min-w-[140px]">
+              <LogoutButton fullWidth={false} className="w-full justify-center px-5 py-3 text-sm font-semibold" />
             </div>
           </div>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -377,7 +482,14 @@ const [date, setDate] = useState(getTodayVN());
         <div className="space-y-6 rounded-[32px] border border-white/70 bg-white/90 p-6 shadow-2xl shadow-slate-200/60">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-slate-900">Danh sách QC</h2>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <button
+                onClick={handleCheckMiss}
+                disabled={checkingMiss || loading || !filteredList.length}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-rose-200/40 transition duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {checkingMiss ? "⏳ Đang check miss..." : "Check MISS"}
+              </button>
               <div className="relative">
                 <input
                   value={search}
@@ -457,6 +569,126 @@ const [date, setDate] = useState(getTodayVN());
               </div>
             </div>
           )}
+
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[1600px] px-5 pb-8">
+        <div className="rounded-[32px] border border-white/70 bg-white/90 p-6 shadow-2xl shadow-slate-200/60">
+          <div className="mb-6 rounded-3xl border border-rose-200 bg-rose-50 p-4">
+            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-slate-900">Bảng Miss QC tạm thời</h3>
+                <p className="text-xs text-slate-500">Đang hiển thị các kết quả sau khi check miss</p>
+              </div>
+              <div className="inline-flex items-center rounded-xl bg-white px-3 py-2 text-xs font-medium text-slate-600 shadow-sm">
+                Tổng miss: <span className="ml-1 font-semibold text-rose-600">{missRows.length}</span>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-2xl border border-rose-200 bg-white">
+              <table className="w-full text-sm">
+                <thead className="bg-rose-100 text-slate-700">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-semibold">QC Code</th>
+                    <th className="px-4 py-3 text-left font-semibold">Fulfillment Type</th>
+                    <th className="px-4 py-3 text-left font-semibold">Type</th>
+                    <th className="px-4 py-3 text-left font-semibold">Status</th>
+                    <th className="px-4 py-3 text-left font-semibold">Checked At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {missRows.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-8 text-center text-slate-500">
+                        Chưa có dữ liệu miss QC.
+                      </td>
+                    </tr>
+                  ) : (
+                    missRows.map((item) => (
+                      <tr key={`${item.qcCode}-${item.checkedAt}`} className="border-t border-rose-100 hover:bg-rose-50/60">
+                        <td className="px-4 py-3 font-medium text-slate-900">{item.qcCode}</td>
+                        <td className="px-4 py-3 text-slate-700">{item.fulfillmentType}</td>
+                        <td className="px-4 py-3 text-slate-700">{item.mappedType}</td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                              item.updateStatus === "miss"
+                                ? "bg-rose-100 text-rose-700"
+                                : item.updateStatus === "success"
+                                ? "bg-emerald-100 text-emerald-700"
+                                : "bg-amber-100 text-amber-700"
+                            }`}
+                          >
+                            {item.updateStatus}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-slate-500">
+                          {new Date(item.checkedAt).toLocaleString("vi-VN", {
+                            timeZone: "Asia/Ho_Chi_Minh",
+                          })}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-slate-900">Biểu đồ thống kê QC theo giờ</h3>
+                <p className="text-xs text-slate-500">Dữ liệu trong ngày đang chọn ({date})</p>
+              </div>
+              <div className="inline-flex items-center rounded-xl bg-white px-3 py-2 text-xs font-medium text-slate-600 shadow-sm">
+                Khung giờ cao nhất: <span className="ml-1 font-semibold text-indigo-600">{busiestHour.label}</span>
+                <span className="ml-1">({busiestHour.scans} QC)</span>
+              </div>
+            </div>
+            <div className="h-[320px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart
+                  data={qcHourlyChartData}
+                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fontSize: 12, fill: "#64748b" }}
+                    interval={1}
+                    tickMargin={8}
+                  />
+                  <YAxis tick={{ fontSize: 12, fill: "#64748b" }} allowDecimals={false} />
+                  <Tooltip
+                    formatter={(value, name) => [
+                      value,
+                      name === "scans" ? "Số lượt scan" : "Lũy kế",
+                    ]}
+                    labelFormatter={(label) => `Khung giờ ${label}`}
+                  />
+                  <Legend />
+                  <Bar
+                    dataKey="scans"
+                    name="Số lượt scan"
+                    fill="#6366f1"
+                    radius={[6, 6, 0, 0]}
+                    maxBarSize={24}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="cumulative"
+                    name="Lũy kế"
+                    stroke="#0ea5e9"
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 5 }}
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
       </div>
 

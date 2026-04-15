@@ -2,7 +2,17 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useEmployeeStore } from "@/stores/employeeStore"; // Đảm bảo đường dẫn chính xác
 
-const LogoutButton: React.FC = () => {
+interface LogoutButtonProps {
+  className?: string;
+  fullWidth?: boolean;
+  label?: string;
+}
+
+const LogoutButton: React.FC<LogoutButtonProps> = ({
+  className,
+  fullWidth = true,
+  label = "Đăng Xuất",
+}) => {
   const router = useRouter();
   const setEmployee = useEmployeeStore((state) => state.setEmployee);
 
@@ -27,9 +37,9 @@ const LogoutButton: React.FC = () => {
   return (
     <button
       onClick={handleLogout}
-      className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+      className={`${fullWidth ? "w-full" : "inline-flex items-center"} cursor-pointer rounded-lg border border-primary bg-primary px-4 py-2 text-white transition hover:bg-opacity-90 ${className ?? ""}`}
     >
-      Đăng Xuất
+      {label}
     </button>
   );
 };
